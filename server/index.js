@@ -58,7 +58,13 @@ app.post('/', function(req, res) {
 })
 
 app.post('/newValue', function(req, res) {
-  
+  dbhelpers.insertValue(req.body.newValue, function(error, results) {
+    if(error){
+      console.log('error: ', error);
+    } else {
+      res.send(JSON.stringify(results));
+    }
+  })
 })
 
 app.post('/inputTest', function(req, res) {

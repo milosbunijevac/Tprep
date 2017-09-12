@@ -31,6 +31,18 @@ var getValue = function(cb) {
   })
 }
 
+var insertValue = function(value, cb) {
+  var uservalue = value;
+  db.query("UPDATE numberStore SET value=(?) WHERE id=1", uservalue, function(error, results) {
+    if(error) {
+      cb(error, null)
+    } else {
+      cb(null, results)
+    }
+  })
+}
+
 module.exports.getBasicUser = getBasicUser;
 module.exports.insertUser = insertUser;
 module.exports.getValue = getValue;
+module.exports.insertValue = insertValue;
