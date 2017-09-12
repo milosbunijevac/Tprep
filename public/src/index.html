@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+
+</head>
+
+<body>
+    <h3>Hello world</h3>
+
+    <script>
+        function buttonClick() {
+            $.ajax({
+                url: 'http://localhost:3000/',
+                type: 'POST',
+                data: {
+                    'See me?': 'YEAH?'
+                },
+                dataType: 'json',
+                success: (data) => {
+                    console.log(data);
+                    alert('This is the data: ', JSON.stringify(data))
+                },
+                error: (error) => {
+                    alert('This is an error: ', error)
+                }
+            })
+        }
+
+        function listClick() {
+            var howmanyLIs = document.getElementsByTagName('li').length
+            var myTag = document.getElementsByTagName('body')[0];
+            var newLI = document.createElement('li');
+            newLI.setAttribute('onclick', "listClick()");
+            newLI.innerHTML = "now there are: " + howmanyLIs + " li's on this page";
+            document.body.appendChild(newLI);
+            console.log(howmanyLIs);
+        }
+
+        $.ajax({
+            url: 'http://localhost:3000/getValue',
+            type: 'GET',
+            dataType: 'json',
+            success: (data) => {
+                console.log(data[0].value);
+                window.getVal = data[0].value
+                var num = document.createElement('h2');
+                num.className = "numtoClick";
+                num.innerHTML = data[0].value
+                document.body.appendChild(num)
+            },
+            error: (error) => {
+                console.log(error);
+            }
+        })
+
+        function newNum() {
+            $.ajax({
+                url: 'http://localhost:3000/newValue',
+                type: 'POST',
+                data: {
+                    newValue: window.getVal + 1
+                },
+                dataType: 'json',
+                success: (data) => {
+                    console.log('It worked I think.');
+                },
+                error: (error) => {
+                    console.log('It really didnt work');
+                }
+            })
+        }
+    </script>
+
+    <button onclick="buttonClick()"> Click Me! </button>
+    <form id="myform" action="/inputTest" method="POST">
+        <input placeholder="Enter a name to add to DB" name="namevalhere"></input>
+        <input type="submit" value="Submit">
+    </form>
+    <li id="testLI" onclick="listClick()">This is a test</li>
+    <button onclick="newNum()">Increment!</button>
+
+
+</body>
+
+</html>
