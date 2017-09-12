@@ -8,6 +8,7 @@ var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
+app.use(express.static('node_modules'));
 
 app.use(function (req, res, next) {
   
@@ -32,6 +33,10 @@ app.use(function (req, res, next) {
 app.get('/', function(req, res) {
 
   res.sendFile(path.join(__dirname, '../public/src', 'index.html'))
+})
+
+app.post('/axiosTest', function(req, res) {
+  res.send(req.body);
 })
 
 app.get('/getValue', function(req, res) {

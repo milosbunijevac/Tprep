@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    <script src="/axios/dist/axios.js"></script>
 
 </head>
 
@@ -14,6 +15,21 @@
     <h3>Hello world</h3>
 
     <script>
+        function axiosTest() {
+            axios({
+                url: '/axiosTest',
+                method: 'POST',
+                data: {
+                    test: 'Test value'
+                }
+            }).then((results) => {
+                console.log('This is the axios return value: ', results);
+            }).catch((error) => {
+                console.log('This is an error from the axios call in index.html: ', error);
+            });
+        }
+
+
         function buttonClick() {
             $.ajax({
                 url: 'http://localhost:3000/',
@@ -84,6 +100,7 @@
     </form>
     <li id="testLI" onclick="listClick()">This is a test</li>
     <button onclick="newNum()">Increment!</button>
+    <button onclick="axiosTest()">Axios test!</button>
 
 
 </body>
